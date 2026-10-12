@@ -4,9 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "cd ./src/server && env.bat && cd ../../ && tsx watch ./src/server/app.ts",
-    "dev-built": "cd ./src/server && env.bat && cd ../../ && node ./src/server/app.js",
-    "build": "cd ./src/server && env.bat && tsc --build && cd ../client && tsc && cd ../.. && vite build",
+    "dev": "tsx watch ./src/server/app.ts",
+    "dev-built": "node ./src/server/app.js",
+    "build": "cd ./src/server && tsc --build && cd ../client && tsc && cd ../.. && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
@@ -30,6 +30,6 @@
     "@types/serve-favicon": "^2.5.7",
     "tsx": "^4.20.3",
     "typescript": "~5.8.3",
-    "vite": "^7.0.4"
+    "vite": "^8.3.1"
   }
 }

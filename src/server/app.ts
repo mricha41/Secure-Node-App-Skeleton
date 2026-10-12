@@ -18,6 +18,13 @@ import { anApiRouter } from './routes/api/an_api.js';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
+//this is here for now to support older
+//versions of Node that do not provide support
+//for loading .env files
+if (!process.env.ENV_LEGACY) {
+  process.loadEnvFile(path.join(__dirname, ".env"));
+}
+
 console.log(`Running in [${process.env.NODE_ENV}] mode`);
 
 if (process.env.NODE_ENV === "development") {
@@ -49,13 +56,15 @@ if (process.env.NODE_ENV === "development") {
     appType: 'custom',
     server: {
         middlewareMode: true,
-        hmr: {
-            server
+        ws : {
+          server: server
         }
     }
     });
 
-    app.use(viteServer.middlewares);
+    if (viteServer) {
+      app.use(viteServer.middlewares);
+    }
 
 }
 
@@ -75,7 +84,7 @@ if (process.env.NODE_ENV === "development") {
       useDefaults: false,
       directives: {
         //wss is for vite web socket
-        "connect-src": ["'self'", `wss://${process.env.HOST}:${process.env.PORT}`],
+        "connect-src": ["'self'", `wss://${process.env.HOST}`],
         "default-src": ["'self'"],
         "script-src": ["'self'"],
         //unsafe-inline ONLY during development
@@ -182,14 +191,12 @@ if (process.env.NODE_ENV === "development") {
 }
 
 // catch 404 and forward to error handler
-// @ts-ignore
-app.use(function(req, res, next) {
+app.use(function(_req, _res, next) {
   next(createError(404));
 });
 
 // error handler
-// @ts-ignore
-app.use(function(err: any, req: any, res: any, next: any) {
+app.use(function(err: any, req: any, res: any, _next: any) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};

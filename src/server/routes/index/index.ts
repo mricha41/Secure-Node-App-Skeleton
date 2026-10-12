@@ -12,6 +12,14 @@ const entrypoint = "src/client/components/index/index";
 
 let viteInject = "";
 
+//this is here for now to support older
+//versions of Node that do not provide support
+//for loading .env files
+if (!process.env.ENV_LEGACY) {
+  process.loadEnvFile("./src/server/.env");
+}
+
+
 //console.log(process.env)
 
 if (process.env.NODE_ENV === "development") {
@@ -45,8 +53,7 @@ if (process.env.NODE_ENV === "development") {
 
 }
 
-// @ts-ignore
-indexRouter.get('/', function(req, res, next) {
+indexRouter.get('/', function(_req, res, _next) {
   
   res.render('index.ejs', { viteInject: viteInject });
 

@@ -1,8 +1,7 @@
 import express from 'express';
 var anApiRouter = express.Router();
 
-// @ts-ignore
-anApiRouter.get('/', function(req, res, next) {
+anApiRouter.get('/', function(_req, res, _next) {
   
   res.json({ msg: "hello, front end - this is an api endpoint for you to call!" });
 

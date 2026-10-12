@@ -2,16 +2,18 @@ import path from 'path';
 import { defineConfig } from 'vite'
 
 export default defineConfig({
-  base: '',
+  base: '/',
+  input: path.resolve(import.meta.dirname, '/src/client/components/index/index.ts'),
   build: {
     manifest: true,
-    rollupOptions: {
+    /*rolldownOptions: {
       input: {
-        index: path.resolve(__dirname, './src/client/components/index/index.ts')
+        index: path.resolve(import.meta.dirname, '/src/client/components/index/index.ts')
       }
-    },
+    },*/
     sourcemap: false,
-    outDir: path.resolve(__dirname, './src/server/dist'),
+    outDir: path.resolve(import.meta.dirname, '/src/server/dist'),
     emptyOutDir: true
   }
 });
+
